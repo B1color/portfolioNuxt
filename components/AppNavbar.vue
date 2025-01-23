@@ -1,9 +1,11 @@
 <template>
-  <nav class="p-4 bg-white-800 text-dark sticky-top">
+  <nav class="fixed top-0 w-full p-4 bg-white text-dark z-50">
     <div class="flex justify-between items-center">
 
+      <!-- Logo -->
       <img src="/favicon.png" alt="Logo" class="h-8" />
 
+      <!-- Bouton mobile -->
       <button 
         class="md:hidden focus:outline-none" 
         @click="toggleMenu"
@@ -16,25 +18,26 @@
 
       <!-- Menu desktop -->
       <ul class="hidden md:flex space-x-4 ml-auto">
-        <li><a href="#profile" class="py-2 px-4 hover:text-gray-300">Profil</a></li>
-        <li><a href="#skills" class="py-2 px-4 hover:text-gray-300">Compétences</a></li>
-        <li><a href="#projects" class="py-2 px-4 hover:text-gray-300">Projets</a></li>
-        <li><a href="#contact" class="py-2 px-4 hover:text-gray-300">Contact</a></li>
+        <li><a href="#profile" class="py-2 px-4 hover:text-gray-500">Profil</a></li>
+        <li><a href="#skills" class="py-2 px-4 hover:text-gray-500">Compétences</a></li>
+        <li><a href="#projects" class="py-2 px-4 hover:text-gray-500">Projets</a></li>
+        <li><a href="#contact" class="py-2 px-4 hover:text-gray-500">Contact</a></li>
       </ul>
     </div>
 
     <!-- Menu mobile -->
     <ul
       v-if="isMenuOpen"
-      class="md:hidden flex flex-col space-y-2 mt-4 bg-white-700 p-4"
+      class="md:hidden flex flex-col space-y-2 mt-4 bg-gray-50 p-4"
     >
-      <li><a href="#profile" class="block py-2 px-4 hover:text-gray-300">Profil</a></li>
-      <li><a href="#skills" class="block py-2 px-4 hover:text-gray-300">Compétences</a></li>
-      <li><a href="#projects" class="block py-2 px-4 hover:text-gray-300">Projets</a></li>
-      <li><a href="#contact" class="block py-2 px-4 hover:text-gray-300">Contact</a></li>
+      <li><a href="#profile" class="block py-2 px-4 hover:text-gray-500">Profil</a></li>
+      <li><a href="#skills" class="block py-2 px-4 hover:text-gray-500">Compétences</a></li>
+      <li><a href="#projects" class="block py-2 px-4 hover:text-gray-500">Projets</a></li>
+      <li><a href="#contact" class="block py-2 px-4 hover:text-gray-500">Contact</a></li>
     </ul>
   </nav>
 </template>
+
 
 <script setup>
 import { ref } from 'vue'

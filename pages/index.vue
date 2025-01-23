@@ -1,7 +1,9 @@
 <template>
     <div>
       <ProfileSection id="profile" />
-      <ProjectSection id="projects" />      
+      <SkillSection id="skills" />
+      <ProjectSection id="projects" />
+      <ContactSection id="contact" />      
     </div>
   </template>
   
