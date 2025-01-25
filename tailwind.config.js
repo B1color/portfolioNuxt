@@ -17,6 +17,9 @@ module.exports = {
         customBlue: '#8aa4c5',
         customGray: '#8c8c8c',
       },
+      borderRadius: {
+        full: '9999px',
+      },
     },
   },
   plugins: [],

@@ -118,7 +118,7 @@
               v-if="selectedProject?.site_url"
               :href="selectedProject.site_url"
               target="_blank"
-              class="border border-gray-300 text-dark px-4 py-2 rounded-full hover:bg-gray-300 hover:text-white flex items-center space-x-2"
+              class="border border-gray-300 text-dark px-4 py-2 hover:bg-gray-300 hover:text-white flex items-center space-x-2"
             >
               <img src="/Icone Globe.png" alt="">
               <span>Visiter le site</span>
@@ -127,7 +127,7 @@
               v-if="selectedProject?.github_link"
               :href="selectedProject.github_link"
               target="_blank"
-              class="border border-gray-300 text-dark px-4 py-2 rounded-full hover:bg-gray-300 hover:text-white flex items-center space-x-2"
+              class="border border-gray-300 text-dark px-4 py-2 hover:bg-gray-300 hover:text-white flex items-center space-x-2"
             >
             <img src="/Icône Github 16.png" alt="">
             <span>Voir sur GitHub</span>

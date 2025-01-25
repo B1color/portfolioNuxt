@@ -4,7 +4,7 @@
       <!-- Titre -->
       <div class="flex items-center space-x-4">
         <img src="/Icône Nouveau Message.png" alt="Icon" class="w-8 h-8">
-        <h2 class="text-2xl md:text-4xl font-bold text-slate-700">Contact/</h2>
+        <h2 class="text-2xl md:text-4xl font-bold text-slate-700 py-2 px-4">Contact/</h2>
       </div>
       
       <!-- Paragraphe -->

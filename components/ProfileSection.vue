@@ -17,7 +17,7 @@
       </div>
 
       <div class="relative md:w-1/2 flex justify-center items-center">
-        <img :src="profileImage" alt="Manon Le Bouard" class="w-64 h-64 object-cover rounded-full shadow-lg" />
+        <img :src="profileImage" alt="Manon Le Bouard" class="w-64 h-64 object-cover shadow-lg" />
       </div>
 
       <!-- Indicateur de scroll -->

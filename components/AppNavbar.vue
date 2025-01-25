@@ -49,30 +49,31 @@
     </div>
   </nav>
  <!-- Page Indicator -->
-<div class="pageIndicator fixed top-1/2 left-4 transform -translate-y-1/2 hidden md:flex flex-col items-start space-y-4 z-50">
-  <div
-    v-for="(section, index) in sections"
-    :key="index"
-    class="flex items-center space-x-2 cursor-pointer"
-    @click="scrollToSection(section.id)"
-  >
-    <div
-      :class="[
-        'rounded transition-all duration-300',
-        activeSection === section.id
-          ? 'bg-sky-800'
-          : 'bg-gray-300 opacity-50'
-      ]"
-      :style="{ width: section.width, height: '4px' }"
-    ></div>
+ <div class="pageIndicator fixed top-1/2 left-4 transform -translate-y-1/2 hidden md:flex flex-col items-start z-50">
+      <div
+        v-for="(section, index) in sections"
+        :key="index"
+        class="flex items-center cursor-pointer mb-4"
+        @click="scrollToSection(section.id)"
+      >
+        <div
+          :class="[
+            'transition-all duration-300',
+            activeSection === section.id
+              ? 'bg-sky-800'
+              : 'bg-gray-300 opacity-50'
+          ]"
+          :style="{ width: section.width, height: '4px' }"
+        ></div>
+      </div>
     </div>
-  </div>
+
    <!-- Social Media Indicator -->
    <div class="fixed top-1/2 right-4 transform -translate-y-1/2 hidden md:flex flex-col items-start space-y-6 z-50">
     <!-- Rond indicateur animé -->
     <div
-      class="absolute w-2 h-2 bg-sky-800 rounded-full transition-all duration-400"
-      :style="{ top: `${activeIndex * 55}px`, left: '-20px' }"
+      class="absolute w-2 h-2 bg-sky-800 border-radius: 9999px transition-all duration-400"
+      :style="{ top: `${activeIndex * 30}px`, left: '-20px' }"
     ></div>
 
     <!-- Liste des items -->
@@ -180,3 +181,12 @@ onUnmounted(() => {
 
 </script>
 
+<style scoped>
+.pageIndicator > div {
+  margin-bottom: 1rem; /* Équivalent à `space-y-4` */
+}
+.pageIndicator > div:last-child {
+  margin-bottom: 0; /* Supprime l'espace après le dernier élément */
+}
+
+</style>
