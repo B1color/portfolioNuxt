@@ -69,7 +69,7 @@ const handleScroll = () => {
   }
 };
 
-async function fetchProfile() {
+async function fetchContact() {
   try {
     const response = await axios.get("https://strapi.mlebouard.fr/api/contacts");
     const data = response.data.data[0];
@@ -82,11 +82,7 @@ async function fetchProfile() {
 }
 
 onMounted(() => {
-  fetchProfile();
-});
-
-
-onMounted(() => {
+  fetchContact();
   window.addEventListener('scroll', handleScroll);
   handleScroll();
 });
@@ -94,4 +90,5 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
+
 </script>

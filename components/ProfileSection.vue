@@ -68,8 +68,8 @@ async function fetchProfile() {
     const response = await axios.get('https://strapi.mlebouard.fr/api/profils/');
     const data = response.data.data[0]; // Récupérer le premier profil
     profile.value = {
-      Titre: data.Titre,
-      description: data.description,
+      Titre: data.Titre || 'Manon Le Bouard',
+      description: data.description || 'Développeuse web et mobile',
     };
   } catch (error) {
     console.error('Erreur lors de la récupération des données de profil:', error);
@@ -109,23 +109,13 @@ const handleScroll = () => {
 };
 
 onMounted(() => {
-  fetchProfile();
-});
-
-onMounted(() => {
-  window.addEventListener('scroll', detectActiveSection);
-  detectActiveSection();
+  fetchProfile(); // Charger les données de profil
+  window.addEventListener("scroll", handleScroll); // Activer le gestionnaire de défilement
+  detectActiveSection(); // Détecter la section active
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', detectActiveSection);
-});
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-  handleScroll();
+  window.removeEventListener("scroll", handleScroll);
 });
 
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
 </script>
