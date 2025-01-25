@@ -1,75 +1,124 @@
 <template>
-  <section id="skills" class="skill section fp-tableCell flex border border-slate-200 items-center w-full max-w-screen-lg mx-auto px-4 bg-white-100">
+  <section
+    id="skills"
+    class="skill section fp-tableCell relative flex items-center justify-center items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 min-h-screen bg-white-100"
+  >
     <div class="w-full">
-      <!-- Titre -->
-      <div class="flex items-center space-x-4">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 128 128"
-          width="32px"
-          height="32px"
-          class="text-gray-500"
-        >
-          <path fill="#D8D4EA" d="M100.2,104H19c-5.5,0-10-4.5-10-10V29h98.7c6,0,10.7,5.3,9.9,11.2l-7.5,55C109.5,100.2,105.2,104,100.2,104 z" />
-        </svg>
-        <h2 class="text-2xl font-bold text-gray-700 py-2 px-4 border border-slate-300 rounded-full">
-          My Skills
-        </h2>
-      </div>
-
       <!-- Contenu en deux colonnes -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
         <!-- Colonne gauche : Formation -->
-        <div class="space-y-4">
-          <h3 class="text-xl font-semibold text-gray-700">Formation</h3>
-          <ul class="list-disc list-inside space-y-2">
-            <li class="text-gray-600 text-sm">
-              Licence Informatique - Université de Reims
+        <div class="space-y-6">
+          <div class="flex items-center space-x-4">
+
+          <img src="/Icone study.png" alt="Icone Formation">
+          <h3 class="text-2xl font-semibold text-gray-700">Formation/</h3>
+          </div>
+          <ul class="list-disc list-inside space-y-4">
+            <li class="text-lg text-gray-600">
+              Bachelor in Digital Media and Internet - IUT at Troyes
             </li>
-            <li class="text-gray-600 text-sm">
-              Formation Développement Web - OpenClassrooms
-            </li>
-            <li class="text-gray-600 text-sm">
-              Certification Vue.js - Udemy
-            </li>
+            <li class="text-lg text-gray-600">
+              Bac general | Lycée St-Louis            </li>
           </ul>
         </div>
 
-        <!-- Colonne droite : Study -->
-        <div class="space-y-4">
-          <h3 class="text-xl font-semibold text-gray-700">Study</h3>
-          <ul class="list-disc list-inside space-y-2">
-            <li class="text-gray-600 text-sm">
-              Vue.js Advanced Techniques
-            </li>
-            <li class="text-gray-600 text-sm">
-              Node.js and Backend Development
-            </li>
-            <li class="text-gray-600 text-sm">
-              Responsive Design with Tailwind CSS
-            </li>
-          </ul>
+        <!-- Colonne droite : Skills -->
+        <div class="space-y-6">
+          <div class="flex items-center space-x-4">
+          <img src="/Icône Code.png" alt="Icone Skills">
+          <h3 class="text-2xl font-semibold text-gray-700">Skills/</h3>
+          </div>
+          <h4 class="text-lg text-gray-500">Technologies</h4>
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-for="skill in skills"
+              :key="skill.id"
+              class="bg-white border border-gray-300 text-gray-700 text-sm px-4 py-2 rounded-lg shadow-md cursor-pointer hover:bg-gray-100"
+              @click="showSkillDetails(skill)"
+            >
+            <div class="flex items-center space-x-4">
+            <img
+              :src="skill.icon"
+              alt="Skill Icon"
+              class="h-6 w-6"
+            />
+            {{ skill.title }}
+          </div>
+            </span>
+          </div>
+          <div
+            v-if="isVisible"
+            class="scrollDownIndicator fixed bottom-4 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center space-y-2 z-50 transition-opacity duration-300"
+          >
+            <p class="text-slate-700 text-sm whitespace-nowrap uppercase mb-2">
+              Skills
+            </p>
+            <div class="flex flex-col space-y-1">
+              <div class="w-1 h-10 bg-slate-700"></div>
+            </div>
+          </div>
+          <div
+            v-if="isPopupVisible"
+            class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50 pointer-events-none"
+            >
+            <div class="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-5xl mx-4 lg:mx-auto overflow-y-auto pointer-events-auto">
+              <!-- Bouton Fermer -->
+              <button
+                class="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+                @click="closePopup"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <!-- Contenu du pop-up -->
+              <h3 class="text-2xl font-bold mb-4 text-slate-700">{{ selectedSkill?.title }}</h3>
+              <p class="text-gray-700">{{ selectedSkill?.description }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Indicateur de type -->
-    <div
-      v-if="isVisible"
-      class="scrollDownIndicator fixed bottom-4 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center space-y-2 z-50 transition-opacity duration-300"
-    >
-      <p class="text-slate-700 text-sm whitespace-nowrap uppercase">
-        Skills
-      </p>
-    </div>
   </section>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
+import axios from "axios";
 
 const isVisible = ref(false);
+const skills = ref([]); // Liste des skills
+const selectedSkill = ref(null); // Skill sélectionné pour le pop-up
+const isPopupVisible = ref(false); // Contrôle de la visibilité du pop-up
 
+// Fonction pour récupérer les skills
+const fetchSkills = async () => {
+  try {
+    const response = await axios.get("https://strapi.mlebouard.fr/api/skills?populate=*"); // Remplacez par votre URL
+    skills.value = response.data.data.map((skill) => ({
+      title: skill.Titre,
+      description: skill.description || "Description not provided",
+      icon: skill.icone?.url ? `https://strapi.mlebouard.fr${skill.icone.url}` : null,
+    }));
+  } catch (error) {
+    console.error("Erreur lors de la récupération des skills :", error);
+  }
+};
+
+// Afficher le pop-up avec les détails d'un skill
+const showSkillDetails = (skill) => {
+  selectedSkill.value = skill;
+  isPopupVisible.value = true;
+};
+
+// Cacher le pop-up
+const closePopup = () => {
+  isPopupVisible.value = false;
+  selectedSkill.value = null;
+};
+
+// Gestion du scroll pour la section
 const handleScroll = () => {
   const section = document.getElementById("skills");
   if (section) {
@@ -80,6 +129,7 @@ const handleScroll = () => {
 };
 
 onMounted(() => {
+  fetchSkills(); // Récupérer les skills au montage
   window.addEventListener("scroll", handleScroll);
   handleScroll();
 });

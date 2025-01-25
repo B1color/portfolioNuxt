@@ -156,9 +156,12 @@ const detectActiveSection = () => {
 const scrollToSection = (id) => {
   const section = document.getElementById(id);
   if (section) {
-    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const yOffset = -70; // Ajustez cette valeur selon la hauteur de votre navbar
+    const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    window.scrollTo({ top: y, behavior: 'smooth' });
   }
 };
+
 
 const handleClick = (item) => {
   activeItem.value = item.label; // Met à jour l'item actif

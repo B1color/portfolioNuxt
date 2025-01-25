@@ -1,12 +1,10 @@
 <template>
-<section id="projects" class="project section fp-tableCell relative flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 bg-white-100">
+<section id="projects" class="project section m-8 fp-tableCell relative min-h-screen flex items-center justify-center w-full max-w-screen-lg mx-auto px-4 md:px-8 bg-white-100">
   <div class="space-y-8">
       <!-- Titre de la section -->
       <div class="flex items-center space-x-4">
-        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="64" height="64" viewBox="0 0 128 128">
-        <path fill="#D8D4EA" d="M100.2,104H19c-5.5,0-10-4.5-10-10V29h98.7c6,0,10.7,5.3,9.9,11.2l-7.5,55C109.5,100.2,105.2,104,100.2,104 z"></path><path fill="#FFF" d="M104,104H19c-5.5,0-10-4.5-10-10V24h24.6c3.3,0,6.5,1.7,8.3,4.5l4.1,6.1c1.9,2.8,5,4.5,8.3,4.5H89 c5.5,0,10,4.5,10,10v41v1.9C99,96.5,100.8,100.8,104,104L104,104z"></path><path fill="#454B54" d="M100.2,107H19c-7.2,0-13-5.8-13-13V24c0-1.7,1.3-3,3-3h24.6c4.4,0,8.4,2.2,10.8,5.8l4.1,6.1 c1.3,2,3.5,3.1,5.8,3.1H89c7.2,0,13,5.8,13,13v35c0,1.7-1.3,3-3,3s-3-1.3-3-3V49c0-3.9-3.1-7-7-7H54.4c-4.4,0-8.4-2.2-10.8-5.8 l-4.1-6.1c-1.3-2-3.5-3.1-5.8-3.1H12v67c0,3.9,3.1,7,7,7h81.2c3.5,0,6.5-2.6,6.9-6.1l7.5-55c0.2-2-0.4-4-1.7-5.5 c-1.3-1.5-3.2-2.4-5.2-2.4c-1.7,0-3-1.3-3-3s1.3-3,3-3c3.7,0,7.3,1.6,9.7,4.4c2.5,2.8,3.6,6.5,3.2,10.2l-7.5,55 C112.3,102.1,106.7,107,100.2,107z"></path><path fill="#454B54" d="M107.7,32H43c-1.7,0-3-1.3-3-3s1.3-3,3-3h64.7c1.7,0,3,1.3,3,3S109.3,32,107.7,32z"></path>
-        </svg>
-        <h2 class="text-xl font-regular text-gray-700 py-2 px-4 ">
+        <img src="/Icône Dossier 32.png" alt="">
+        <h2 class="text-2xl font-bold text-slate-700 py-2 px-4 ">
           Projects/
         </h2>
       </div>
@@ -35,32 +33,6 @@
       </div>
       <p v-else class="text-center text-gray-500">Chargement des projets...</p>
     </div>
-
-    <!-- Popup -->
-    <div
-      v-if="isPopupVisible"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-    >
-      <div class="bg-white rounded-lg shadow-lg w-11/12 sm:w-3/4 lg:w-1/2 p-6 relative">
-        <button
-          class="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
-          @click="closePopup"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-
-        <h3 class="text-xl font-bold mb-4">Projects/ {{ selectedProject?.titre }}</h3>
-        <img
-          v-if="selectedProject?.thumbnailUrl"
-          :src="selectedProject.thumbnailUrl"
-          :alt="`Image de ${selectedProject?.titre}`"
-          class="w-full h-48 object-cover mb-4 rounded"
-        />
-        <p class="text-gray-700">{{ selectedProject?.description }}</p>
-      </div>
-    </div>
     <div
         v-if="isVisible"
         class="scrollDownIndicator fixed bottom-4 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center space-y-2 z-50 transition-opacity duration-300"
@@ -72,6 +44,43 @@
           <div class="w-1 h-10 bg-slate-700"></div>
         </div>
       </div>
+    <!-- Popup -->
+    <div
+      v-if="isPopupVisible"
+      class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50 pointer-events-auto"
+    >
+      <div class="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-5xl mx-4 lg:mx-auto overflow-y-auto">
+        <!-- Bouton Fermer -->
+        <button
+          class="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+          @click="closePopup"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <!-- Contenu du pop-up -->
+        <h3 v-if="selectedProject" class="text-xl font-bold mb-4">
+          Projects/ {{ selectedProject?.titre }}
+        </h3>
+        <img
+          v-if="selectedProject?.mediumUrl"
+          :src="selectedProject.mediumUrl"
+          :alt="`Image de ${selectedProject?.titre}`"
+          class=" object-contain mx-auto mb-4"
+          />
+        <p v-if="selectedProject?.description" class="text-gray-700">
+          {{ selectedProject?.description }}
+        </p>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -121,6 +130,9 @@ async function fetchProjects() {
       description: project.description,
       thumbnailUrl: project.image_principal?.formats?.thumbnail?.url
         ? `https://strapi.mlebouard.fr${project.image_principal.formats.small.url}`
+        : null,
+      mediumUrl: project.image_principal?.formats?.medium?.url
+        ? `https://strapi.mlebouard.fr${project.image_principal.formats.medium.url}`
         : null,
     }));
   } catch (error) {

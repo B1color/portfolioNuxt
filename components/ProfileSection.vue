@@ -1,5 +1,5 @@
 <template>
-  <section id="profile" class="profile section pt-30 h-screen flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 bg-white">
+  <section id="profile" class="profile section pt-30 h-screen flex items-center  w-full max-w-screen-lg mx-auto px-4 md:px-8 bg-white">
     <div class="flex flex-col md:flex-row items-center justify-center w-full h-full space-y-8 md:space-y-0 md:space-x-16">
       <!-- Colonne gauche -->
       <div class="md:w-1/2 flex flex-col justify-center items-start text-left">
@@ -30,7 +30,7 @@
         </p>
         
         <div class="flex flex-col space-y-1">
-          <div class="w-1 h-35 bg-slate-700"></div>
+          <div class="w-1 h-5 md:h-25 lg:h-35 bg-slate-700"></div>
         </div>
       </div>
       <!-- Indicateur de type -->
@@ -70,7 +70,6 @@ async function fetchProfile() {
     profile.value = {
       Titre: data.Titre,
       description: data.description,
-      image: data.documentId ? `/images/${data.documentId}.jpg` : null // Assurez-vous que vous avez l'image ou remplacez par une URL correcte
     };
   } catch (error) {
     console.error('Erreur lors de la récupération des données de profil:', error);
@@ -99,11 +98,13 @@ const detectActiveSection = () => {
   }
 };
 const handleScroll = () => {
-  hasScrolled.value = window.scrollY > 0;
+  const scrollY = window.scrollY;
+  hasScrolled.value = scrollY > 20;
+
   const section = document.getElementById('profile');
   if (section) {
     const rect = section.getBoundingClientRect();
-    isVisible.value = rect.top >= 0 && rect.bottom <= window.innerHeight;
+    isVisible.value = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
   }
 };
 
