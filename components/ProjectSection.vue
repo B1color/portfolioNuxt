@@ -10,8 +10,8 @@
         <h2 class="text-2xl font-bold text-slate-700 py-2 px-4">Projects/</h2>
       </div>
 
-      <!-- Grille des projets -->
-      <div v-if="projects.length > 0" class="projects-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
+      <!-- Grille projets -->
+      <div v-if="projects.length > 0" class="projects-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 mt-6">
         <div
           v-for="(project, index) in projects"
           :key="project.id"
@@ -22,7 +22,7 @@
             v-if="project.thumbnailUrl"
             :src="project.thumbnailUrl"
             :alt="`Image de ${project.titre}`"
-            class="w-full h-48 object-cover"
+            class="w-full  object-cover"
           />
           <div class="p-4">
             <h3 class="text-lg font-bold mb-2">{{ project.titre }}</h3>
@@ -45,6 +45,7 @@
           <div class="w-1 h-10 bg-slate-700"></div>
         </div>
     </div>
+    <!-- Pop up -->
     <div
       v-if="isPopupVisible"
       class="fixed inset-0 backdrop-blur-sm z-50 flex items-center justify-center"
@@ -62,7 +63,6 @@
           </svg>
         </button>
 
-        <!-- Titre fixe -->
         <div class="popup-header sticky top-0 bg-white z-10">
           <h2 v-if="selectedProject?.titre" class="text-2xl font-bold mb-4 text-slate-700 p-4 ">
             {{ selectedProject.titre }}
@@ -71,12 +71,11 @@
 
         <!-- Contenu scrollable -->
         <div class="popup-content p-6 overflow-y-auto">
-          <!-- Image principale -->
           <img
             v-if="selectedProject?.mediumUrl"
             :src="selectedProject.mediumUrl"
             :alt="`Image de ${selectedProject?.titre}`"
-            class="w-full object-contain mb-4"
+            class="w-full h-130 object-contain mb-4"
           />
 
           <!-- Présentation -->
@@ -195,10 +194,10 @@ async function fetchProjects() {
       github_link: project.github_link,
       Presentation: project.Presentation,
       thumbnailUrl: project.image_principal?.formats?.thumbnail?.url
-        ? `https://strapi.mlebouard.fr${project.image_principal.formats.thumbnail.url}`
+        ? `https://strapi.mlebouard.fr${project.image_principal.formats.medium.url}`
         : null,
       mediumUrl: project.image_principal?.formats?.medium?.url
-        ? `https://strapi.mlebouard.fr${project.image_principal.formats.medium.url}`
+        ? `https://strapi.mlebouard.fr${project.image_principal.formats.large.url}`
         : null,
     }));
   } catch (error) {
@@ -212,21 +211,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.project-card:hover {
-  transform: scale(1.03);
-}
-
-.project-card img {
-  transition: transform 0.3s ease-in-out;
-}
-
-.project-card:hover img {
-  transform: scale(1.05);
-}
-
 .popup-container {
-  max-height: 90vh; /* Hauteur maximale pour éviter que la popup déborde */
-  overflow: hidden; /* Évite les débordements */
+  max-height: 90vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -235,17 +222,17 @@ onMounted(() => {
   position: sticky;
   top: 0;
   background-color: white;
-  z-index: 10; /* Pour garder le titre visible au-dessus du contenu scrollable */
+  z-index: 10;
   border-bottom: 1px solid #e2e8f0;
 }
 
 .popup-content {
-  max-height: calc(90vh - 50px); /* Limite la hauteur du contenu en tenant compte du titre */
-  overflow-y: auto; /* Active le défilement vertical */
+  max-height: calc(90vh - 50px);
+  overflow-y: auto;
 }
 
 button {
-  z-index: 20; /* S'assure que le bouton est toujours au-dessus du titre */
+  z-index: 20;
 }
 
 
