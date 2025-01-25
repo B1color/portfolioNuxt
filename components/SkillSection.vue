@@ -1,133 +1,76 @@
 <template>
-    <section class="skills-section">
-      <div class="container">
-        <h2 class="section-title">My Skills</h2>
-        <p class="section-description">
-          Here are some of the technical and soft skills I have acquired over time as a developer.
-        </p>
-        <div class="skills-grid">
-          <div
-            v-for="(skill, index) in skills"
-            :key="index"
-            class="skill-card"
-          >
-            <div class="icon-wrapper">
-              <img :src="skill.icon" :alt="`${skill.name} icon`" />
-            </div>
-            <h3 class="skill-title">{{ skill.name }}</h3>
-            <p class="skill-description">{{ skill.description }}</p>
-          </div>
+  <section id="skills" class="skill  section fp-tableCell relative flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 min-h-screen bg-white-100">
+    <div class="space-y-8">
+
+      <div class="flex items-center space-x-4">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 128 128"
+          width="32px"
+          height="32px"
+          class="text-gray-500"
+        >
+          <path fill="#D8D4EA" d="M100.2,104H19c-5.5,0-10-4.5-10-10V29h98.7c6,0,10.7,5.3,9.9,11.2l-7.5,55C109.5,100.2,105.2,104,100.2,104 z" />
+        </svg>
+        <h2 class="text-2xl font-regular text-gray-700 py-2 px-4 border border-slate-300 rounded-full">
+          My Skills
+        </h2>
+      </div>
+
+      <div class="skills-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
+        <div
+          v-for="(skill, index) in skills"
+          :key="index"
+          class="skill-card border border-slate-300 rounded-lg p-4 shadow-md transition-all duration-300"
+        >
+          <h3 class="text-lg font-bold mb-2">{{ skill.name }}</h3>
+          <p class="text-gray-700 text-sm">{{ skill.description }}</p>
         </div>
       </div>
-    </section>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  
-  // Liste des compétences (techniques ou autres)
-  const skills = ref([
-    {
-      name: 'HTML & CSS',
-      description: 'Proficient in creating responsive and accessible web designs.',
-      icon: '/icons/html-css.svg', // Chemin vers une icône correspondante
-    },
-    {
-      name: 'JavaScript',
-      description: 'Experience in writing modern JavaScript using ES6+ features.',
-      icon: '/icons/javascript.svg',
-    },
-    {
-      name: 'Vue.js',
-      description: 'Building scalable and dynamic SPAs using Vue 3.',
-      icon: '/icons/vuejs.svg',
-    },
-    {
-      name: 'Node.js',
-      description: 'Developing RESTful APIs and backend services.',
-      icon: '/icons/nodejs.svg',
-    },
-    {
-      name: 'Git & GitHub',
-      description: 'Version control and collaboration with Git and GitHub.',
-      icon: '/icons/git.svg',
-    },
-    {
-      name: 'Problem Solving',
-      description: 'Strong analytical skills to solve complex problems.',
-      icon: '/icons/problem-solving.svg',
-    },
-  ]);
-  </script>
-  
-  <style scoped>
-  .skills-section {
-    padding: 4rem 2rem;
-    background-color: #f9fafb;
-    text-align: center;
+    </div>
+    <!-- Indicateur de type -->
+    <div
+        v-if="isVisible"
+        class="scrollDownIndicator fixed bottom-4 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center space-y-2 z-50 transition-opacity duration-300"
+      >
+        <p class="text-slate-700 text-sm whitespace-nowrap uppercase mb-2">
+          Skills
+        </p>
+        <div class="flex flex-col space-y-1">
+          <div class="w-1 h-10 bg-slate-700"></div>
+        </div>
+      </div>
+  </section>
+</template>
+
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+
+const isVisible = ref(false);
+
+const skills = ref([
+  { name: 'HTML & CSS', description: 'Maîtrise des concepts de base et avancés.' },
+  { name: 'JavaScript', description: 'Expérience dans les frameworks modernes.' },
+  { name: 'Vue.js', description: 'Création de SPA dynamiques avec Vue 3.' },
+  { name: 'Node.js', description: 'Développement backend avec Node.js.' },
+  { name: 'Git & GitHub', description: 'Versioning et collaboration avec Git.' },
+]);
+
+const handleScroll = () => {
+  const section = document.getElementById('skills');
+  if (section) {
+    const rect = section.getBoundingClientRect();
+    isVisible.value = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
   }
-  
-  .container {
-    max-width: 1200px;
-    margin: auto;
-  }
-  
-  .section-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 1rem;
-  }
-  
-  .section-description {
-    font-size: 1.25rem;
-    color: #555;
-    margin-bottom: 2rem;
-  }
-  
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-  }
-  
-  .skill-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-  .skill-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  }
-  
-  .icon-wrapper {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 1rem;
-  }
-  
-  .icon-wrapper img {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  .skill-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #333;
-    margin: 0.5rem 0;
-  }
-  
-  .skill-description {
-    font-size: 1rem;
-    color: #666;
-    line-height: 1.5;
-  }
-  </style>
-  
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
+
+</script>
