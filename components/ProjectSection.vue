@@ -1,6 +1,6 @@
 <template>
-  <section id="projects" class="project section fp-tableCell relative flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 min-h-screen bg-white-100">
-    <div class="space-y-8">
+<section id="projects" class="project section fp-tableCell relative flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 h-[calc(100vh-64px)] bg-white-100">
+  <div class="space-y-8">
       <!-- Titre de la section -->
       <div class="flex items-center space-x-4">
         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="64" height="64" viewBox="0 0 128 128">
@@ -61,6 +61,17 @@
         <p class="text-gray-700">{{ selectedProject?.description }}</p>
       </div>
     </div>
+    <div
+        v-if="isVisible"
+        class="scrollDownIndicator fixed bottom-4 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center space-y-2 z-50 transition-opacity duration-300"
+      >
+        <p class="text-slate-700 text-sm whitespace-nowrap uppercase mb-2">
+          Projects
+        </p>
+        <div class="flex flex-col space-y-1">
+          <div class="w-1 h-10 bg-slate-700"></div>
+        </div>
+      </div>
   </section>
 </template>
 
@@ -71,6 +82,25 @@ import axios from 'axios';
 const projects = ref([]);
 const isPopupVisible = ref(false);
 const selectedProject = ref(null);
+const isVisible = ref(false);
+
+const handleScroll = () => {
+  const section = document.getElementById('projects');
+  if (section) {
+    const rect = section.getBoundingClientRect();
+    isVisible.value = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
+
 
 const openPopup = (project) => {
   selectedProject.value = project;

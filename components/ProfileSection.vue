@@ -1,6 +1,6 @@
 <template>
-  <section class="profil section fp-tableCell relative flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 min-h-screen bg-white-100 pt-40 md:pt-0" id="profile">
-    <div class="flex flex-col md:flex-row items-center justify-center h-full space-y-8 md:space-y-0 md:space-x-16">
+  <section id="contact" class="contact section h-screen flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 bg-white">
+    <div class="flex flex-col md:flex-row items-center justify-center w-full h-full space-y-8 md:space-y-0 md:space-x-16">
       <!-- Colonne gauche -->
       <div class="md:w-1/2 flex flex-col justify-center items-start text-left">
         <h1 class="text-3xl font-semibold mb-4 text-slate-700">
