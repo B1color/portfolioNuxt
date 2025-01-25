@@ -5,7 +5,7 @@
       <h2 class="text-3xl md:text-4xl font-bold text-slate-700">Contact</h2>
 
       <!-- Paragraphe -->
-      <p class="mt-4 text-left text-slate-700 text-sm md:text-base font-light leading-relaxed">
+      <p class="mt-4 text-left text-slate-700 text-lg md:text-base font-light leading-relaxed">
         I'm always happy to connect!<br>
         Whether you want to collaborate, have a question, feel free to reach out.
       </p>
@@ -14,7 +14,7 @@
       <div class="contact-top mt-6">
         <div class="mail-container grid grid-cols-[1fr_auto] gap-2 items-center border border-sky-800 rounded-md p-2 bg-transparent">
           <!-- Adresse e-mail -->
-          <span class="mail text-slate-700 text-sm md:text-base font-semibold truncate select-all">
+          <span class="mail text-slate-700 text-lg md:text-base font-semibold truncate select-all">
             manon.le-bouard@etudiant.univ-reims.fr
           </span>
           <!-- Bouton Copier -->

@@ -1,5 +1,5 @@
 <template>
-<section id="projects" class="project section fp-tableCell relative flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 h-[calc(100vh-64px)] bg-white-100">
+<section id="projects" class="project section fp-tableCell relative flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 bg-white-100">
   <div class="space-y-8">
       <!-- Titre de la section -->
       <div class="flex items-center space-x-4">
