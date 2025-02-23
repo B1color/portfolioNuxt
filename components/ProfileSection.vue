@@ -11,7 +11,7 @@
           {{ profile?.description || 'Chargement de la description...' }}
         </p>
 
-        <a href="/CV MAJ 2025 ENG.pdf" class="text-base text-slate-700 font-bold underline self-start">
+        <a href="/CV MAJ 2025 ENG.png" class="text-base text-slate-700 font-bold underline self-start">
           Get My Resume
         </a>
       </div>
