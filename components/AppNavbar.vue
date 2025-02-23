@@ -1,27 +1,31 @@
 <template>
-  <nav class="fixed top-0 left-0 w-full p-4 bg-white text-dark z-50">
+<nav
+    :class="[
+      'fixed top-0 left-0 w-full p-4 transition-colors duration-300',
+      isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'
+    ]"
+  >
     <div class="flex justify-between items-center">
       <!-- Logo -->
       <nuxt-link to="/">
         <img src="/logo.png" alt="Logo" class="h-25" />
       </nuxt-link>
-      <!-- Bouton mobile -->
-      <button 
-        class="md:hidden focus:outline-none" 
-        @click="toggleMenu"
-        aria-label="Toggle menu"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-        </svg>
-      </button>
 
       <!-- Menu desktop -->
       <ul class="hidden md:flex space-x-4 ml-auto">
-        <li><a href="#profile" :class="getLinkClass('profile')" class="text-slate-700 py-2 px-4 hover:text-gray-500">Profile</a></li>
-        <li><a href="#skills" :class="getLinkClass('skills')" class="text-slate-700 py-2 px-4 hover:text-gray-500">Skills</a></li>
-        <li><a href="#projects" :class="getLinkClass('projects')" class="text-slate-700 py-2 px-4 hover:text-gray-500">Projects</a></li>
-        <li><a href="#contact" :class="getLinkClass('contact')" class="text-slate-700 py-2 px-4 hover:text-gray-500">Contact</a></li>
+        <li><a href="#profile" :class="['text-black py-2 px-4 ', isDarkMode ? 'hover:text-gray-500 text-gray-300 hover:text-gray-400' : ':hover:text-gray-500 text-black']">Profile</a></li>
+        <li><a href="#skills" :class="['text-black py-2 px-4 ', isDarkMode ? 'hover:text-gray-500 text-gray-300 hover:text-gray-400' : ':hover:text-gray-500 text-black']">Skills</a></li>
+        <li><a href="#projects" :class="['text-black py-2 px-4 ', isDarkMode ? 'hover:text-gray-500 text-gray-300 hover:text-gray-400' : ':hover:text-gray-500 text-black']">Projects</a></li>
+        <li><a href="#contact" :class="['text-black py-2 px-4 ', isDarkMode ? 'hover:text-gray-500 text-gray-300 hover:text-gray-400' : ':hover:text-gray-500 text-black']">Contact</a></li>
+
+        <!-- Bouton Dark Mode -->
+        <button 
+          @click="toggleDarkMode"
+          class="ml-4 px-4 py-2 bg-gray-800 text-white font-semibold rounded-lg transition duration-300 hover:bg-gray-700 
+                 dark:bg-gray-300 dark:text-black dark:hover:bg-gray-400"
+        >
+          {{ isDarkMode ? '🌞 Light' : '🌙 Dark' }}
+        </button>
       </ul>
     </div>
 
@@ -45,6 +49,12 @@
         <li><a href="#skills" :class="getLinkClass('skills')" class="text-slate-700 text-lg hover:text-gray-500" @click="toggleMenu">Skills</a></li>
         <li><a href="#projects" :class="getLinkClass('projects')" class="text-slate-700 text-lg hover:text-gray-500" @click="toggleMenu">Projects</a></li>
         <li><a href="#contact" :class="getLinkClass('contact')" class="text-slate-700 text-lg hover:text-gray-500" @click="toggleMenu">Contact</a></li>
+        <button 
+        @click="toggleDarkMode"
+        class="ml-4 px-4 py-2 bg-gray-800 text-white font-semibold transition duration-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:bg-gray-700 dark:hover:bg-gray-600"
+      >
+        {{ isDarkMode ? '🌞 Light' : '🌙 Dark' }}
+      </button>
       </ul>
     </div>
   </nav>
@@ -57,14 +67,14 @@
         @click="scrollToSection(section.id)"
       >
         <div
-          :class="[
-            'transition-all duration-300',
-            activeSection === section.id
-              ? 'bg-sky-800'
-              : 'bg-gray-300 opacity-50'
-          ]"
-          :style="{ width: section.width, height: '4px' }"
-        ></div>
+        :class="[
+          'transition-all duration-300',
+          activeSection === section.id
+            ? 'bg-sky-800'
+            : isDarkMode ? 'bg-gray-600 opacity-50' : 'bg-gray-300 opacity-50'
+        ]"
+        :style="{ width: section.width, height: '4px' }"
+      ></div>
       </div>
     </div>
 
@@ -92,7 +102,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, inject} from 'vue';
+const isDarkMode = inject('isDarkMode');
+const toggleDarkMode = inject('toggleDarkMode');
+
 
 const isMenuOpen = ref(false);
 const activeSection = ref('profile');

@@ -1,8 +1,10 @@
 <template>
   <section
     id="skills"
-    class="skill section fp-tableCell relative flex items-center justify-center items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 min-h-screen bg-white-100"
-  >
+    :class="[
+      'profile section pt-30 h-screen flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 transition-colors duration-300',
+      isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'
+    ]">
     <div class="w-full">
       <!-- Contenu en deux colonnes -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
@@ -84,8 +86,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, inject } from "vue";
 import axios from "axios";
+const isDarkMode = inject('isDarkMode'); // Récupérer le mode sombre globalement
 
 const isVisible = ref(false);
 const skills = ref([]); // Liste des skills

@@ -1,8 +1,10 @@
 <template>
   <section
     id="projects"
-    class="project section m-8 fp-tableCell relative min-h-screen flex items-center justify-center w-full max-w-screen-lg mx-auto px-4 md:px-8 bg-white-100"
-  >
+    :class="[
+      'profile section pt-30 h-screen flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 transition-colors duration-300',
+      isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'
+    ]">
     <div class="space-y-8">
       <!-- Titre de la section -->
       <div class="flex items-center space-x-4">
@@ -140,8 +142,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, inject } from 'vue';
 import axios from 'axios';
+const isDarkMode = inject('isDarkMode');
 
 const projects = ref([]);
 const isPopupVisible = ref(false);

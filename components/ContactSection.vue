@@ -1,5 +1,8 @@
 <template>
-  <section class="contact section fp-tableCell relative flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 min-h-screen bg-white-100">
+  <section :class="[
+      'profile section pt-30 h-screen flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 transition-colors duration-300',
+      isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'
+    ]">
     <div class="space-y-4">
       <!-- Titre -->
       <div class="flex items-center space-x-4">
@@ -46,9 +49,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, inject } from "vue";
 import axios from "axios";
-
+const isDarkMode = inject('isDarkMode');
 const profile = ref({});
 const isVisible = ref(false);
 
