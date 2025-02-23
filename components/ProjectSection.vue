@@ -15,7 +15,7 @@
         <div
           v-for="(project, index) in projects"
           :key="project.id"
-          class="project-card relative border border-slate-300 overflow-hidden transition-all duration-300 group bg-bg-primary cursor-pointer h-full flex flex-col"
+          class="project-card relative border border-slate-300 overflow-hidden transition-all duration-300 group bg-bg-primary cursor-pointer h-full flex flex-col hover:bg-gray-100"
           @click="openPopup(project)"
         >
           <img
@@ -80,7 +80,7 @@
 
           <!-- Présentation -->
           <section v-if="selectedProject?.Presentation" class="mb-6">
-            <h3 class="text-lg font-bold mb-2 text-gray-700">Présentation</h3>
+            <h3 class="text-lg font-bold mb-2 text-gray-700">Presentation</h3>
             <p class="text-gray-700">{{ selectedProject.Presentation }}</p>
           </section>
           <hr v-if="selectedProject?.Presentation" class="mb-4 border-gray-300" />
