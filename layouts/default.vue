@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    class="min-h-screen transition-colors duration-300"
+    :class="isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'"
+>
     <AppNavbar />
     <NuxtPage />
     <AppFooter />

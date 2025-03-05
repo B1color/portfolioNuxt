@@ -12,30 +12,37 @@
         <div class="space-y-6">
           <div class="flex items-center space-x-4">
 
-          <img src="/Icone study.png" alt="Icone Formation">
-          <h3 class="text-2xl font-semibold text-gray-700 py-2 px-4">Formation/</h3>
+          <img src="/Icone study.png" alt="Icone Formation" class="bg-white p-2 rounded shadow">
+          <h3 class="text-2xl font-semibold py-2 px-4 transition duration-300"
+                :class="isDarkMode ? 'text-white' : 'text-gray-700'">
+              Formation/
+            </h3>          
           </div>
           <ul class="list-disc list-inside space-y-4">
-            <li class="text-lg text-gray-600 py-2 px-4">
+            <li class="text-lg py-2 px-4 transition duration-300"
+                :class="isDarkMode ? 'text-gray-300' : 'text-gray-600'">
               Bachelor in Digital Media and Internet - IUT at Troyes
             </li>
-            <li class="text-lg text-gray-600 py-2 px-4">
-              Bac general | Lycée St-Louis            </li>
+            <li class="text-lg py-2 px-4 transition duration-300"
+                :class="isDarkMode ? 'text-gray-300' : 'text-gray-600'">
+              Bac general | Lycée St-Louis
+            </li>
           </ul>
         </div>
 
         <!-- Colonne droite : Skills -->
         <div class="space-y-6">
           <div class="flex items-center space-x-4">
-          <img src="/Icône Code.png" alt="Icone Skills">
-          <h3 class="text-2xl font-semibold text-gray-700 py-2 px-4">Skills/</h3>
+          <img src="/Icône Code.png" alt="Icone Skills" class="bg-white p-2 rounded shadow">
+          <h3 class="text-2xl font-semibold py-2 px-4 transition duration-300" :class="isDarkMode ? 'text-white' : 'text-gray-700'">Skills/</h3>
           </div>
-          <h4 class="text-lg text-gray-500 py-2 px-4">Technologies</h4>
+          <h4 class="text-lg py-2 px-4 transition duration-300" :class="isDarkMode ? 'text-gray-400' : 'text-gray-500'">Technologies</h4>
           <div class="flex flex-wrap gap-2">
             <span
               v-for="skill in skills"
               :key="skill.id"
-              class="bg-white border border-gray-300 text-gray-700 text-sm py-2 px-4 py-2 rounded-lg shadow-md cursor-pointer hover:bg-gray-100"
+              class="border text-sm py-2 px-4 rounded-lg shadow-md cursor-pointer transition duration-300"
+              :class="isDarkMode ? 'bg-gray-800 border-gray-600 text-white hover:bg-gray-700' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-100'"
               @click="showSkillDetails(skill)"
             >
             <div class="flex items-center space-x-4">
@@ -52,21 +59,27 @@
             v-if="isVisible"
             class="scrollDownIndicator fixed bottom-4 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center space-y-2 z-50 transition-opacity duration-300"
           >
-            <p class="text-slate-700 text-sm whitespace-nowrap uppercase mb-2 py-2 px-4">
+          <p class="text-sm whitespace-nowrap uppercase mb-2 py-2 px-4 transition duration-300"
+               :class="isDarkMode ? 'text-gray-400' : 'text-slate-700'">
               Skills
             </p>
             <div class="flex flex-col space-y-1">
-              <div class="w-1 h-10 bg-slate-700"></div>
+              <div class="w-1 h-10 transition duration-300"
+                   :class="isDarkMode ? 'bg-gray-400' : 'bg-slate-700'">
+              </div>
             </div>
           </div>
           <div
             v-if="isPopupVisible"
-            class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50 pointer-events-none"
+            class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300"
+            :class="isDarkMode ? 'bg-gray-900/80 text-white' : 'bg-white/80 text-black'"
             >
-            <div class="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-5xl mx-4 lg:mx-auto overflow-y-auto pointer-events-auto">
+            <div class="relative rounded-lg shadow-lg p-6 w-full max-w-5xl mx-4 lg:mx-auto overflow-y-auto transition duration-300"
+                 :class="isDarkMode ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-black'">
               <!-- Bouton Fermer -->
               <button
-                class="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+              class="absolute top-4 right-4 transition duration-300"
+                :class="isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-800'"
                 @click="closePopup"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,8 +87,14 @@
                 </svg>
               </button>
               <!-- Contenu du pop-up -->
-              <h3 class="text-2xl font-bold mb-4 text-slate-700 py-2 px-4">{{ selectedSkill?.title }}</h3>
-              <p class="text-gray-700">{{ selectedSkill?.description }}</p>
+              <h3 class="text-2xl font-bold mb-4 py-2 px-4 transition duration-300"
+                  :class="isDarkMode ? 'text-white' : 'text-slate-700'">
+                {{ selectedSkill?.title }}
+              </h3>
+              <p class="transition duration-300"
+                 :class="isDarkMode ? 'text-gray-300' : 'text-gray-700'">
+                {{ selectedSkill?.description }}
+              </p>
             </div>
           </div>
         </div>

@@ -11,53 +11,74 @@
         <img src="/logo.png" alt="Logo" class="h-25" />
       </nuxt-link>
 
-      <!-- Menu desktop -->
-      <ul class="hidden md:flex space-x-4 ml-auto">
-        <li><a href="#profile" :class="['text-black py-2 px-4 ', isDarkMode ? 'hover:text-gray-500 text-gray-300 hover:text-gray-400' : ':hover:text-gray-500 text-black']">Profile</a></li>
-        <li><a href="#skills" :class="['text-black py-2 px-4 ', isDarkMode ? 'hover:text-gray-500 text-gray-300 hover:text-gray-400' : ':hover:text-gray-500 text-black']">Skills</a></li>
-        <li><a href="#projects" :class="['text-black py-2 px-4 ', isDarkMode ? 'hover:text-gray-500 text-gray-300 hover:text-gray-400' : ':hover:text-gray-500 text-black']">Projects</a></li>
-        <li><a href="#contact" :class="['text-black py-2 px-4 ', isDarkMode ? 'hover:text-gray-500 text-gray-300 hover:text-gray-400' : ':hover:text-gray-500 text-black']">Contact</a></li>
+       <!-- Bouton Menu Mobile -->
+    <button
+      class="md:hidden block focus:outline-none"
+      @click.stop="toggleMenu"
+      aria-label="Open menu"
+      :class="isDarkMode ? 'text-white' : 'text-black'"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+      </svg>
+    </button>
 
-        <!-- Bouton Dark Mode -->
-        <button 
-          @click="toggleDarkMode"
-          class="ml-4 px-4 py-2 bg-gray-800 text-white font-semibold rounded-lg transition duration-300 hover:bg-gray-700 
-                 dark:bg-gray-300 dark:text-black dark:hover:bg-gray-400"
-        >
-          {{ isDarkMode ? '🌞 Light' : '🌙 Dark' }}
-        </button>
-      </ul>
-    </div>
+      <!-- Menu Desktop -->
+    <ul class="hidden md:flex space-x-4 ml-auto">
+      <li><a href="#profile" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']">Profile</a></li>
+        <li><a href="#skills" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']">Skills</a></li>
+        <li><a href="#projects" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']">Projects</a></li>
+        <li><a href="#contact" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']">Contact</a></li>
 
-    <!-- Menu mobile -->
+      <!-- Bouton Dark Mode -->
+      <button 
+        @click="toggleDarkMode"
+        class="ml-4 px-4 py-2 font-semibold rounded-lg transition duration-300"
+          :class="isDarkMode ? 'bg-gray-300 text-black hover:bg-gray-400' : 'bg-gray-800 text-white hover:bg-gray-700'"
+      >
+        {{ isDarkMode ? 'Dark' : 'Light' }}
+      </button>
+    </ul>
+  </div>
+
+  </nav>
+
+<!-- Menu Mobile -->
+<transition name="slide">
     <div
       v-if="isMenuOpen"
-      class="fixed top-0 left-0 w-full h-screen bg-white flex flex-col items-center justify-center space-y-8 z-50"
+      class="menu-mobile fixed inset-0 flex flex-col items-center justify-center space-y-8 z-50 bg-opacity-95 transition-all duration-300"
+      :class="isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'"
+      @click.stop
     >
+      <!-- Bouton Fermer -->
       <button
         class="absolute top-4 right-4 focus:outline-none"
         @click="toggleMenu"
         aria-label="Close menu"
+        :class="isDarkMode ? 'text-white' : 'text-black'"
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
 
+      <!-- Liens du menu -->
       <ul class="flex flex-col items-center space-y-4">
-        <li><a href="#profile" :class="getLinkClass('profile')" class="text-slate-700 text-lg hover:text-gray-500" @click="toggleMenu">Profile</a></li>
-        <li><a href="#skills" :class="getLinkClass('skills')" class="text-slate-700 text-lg hover:text-gray-500" @click="toggleMenu">Skills</a></li>
-        <li><a href="#projects" :class="getLinkClass('projects')" class="text-slate-700 text-lg hover:text-gray-500" @click="toggleMenu">Projects</a></li>
-        <li><a href="#contact" :class="getLinkClass('contact')" class="text-slate-700 text-lg hover:text-gray-500" @click="toggleMenu">Contact</a></li>
+        <li><a href="#profile" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']" @click="closeMenu">Profile</a></li>
+        <li><a href="#skills" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']" @click="closeMenu">Skills</a></li>
+        <li><a href="#projects" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']" @click="closeMenu">Projects</a></li>
+        <li><a href="#contact" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']" @click="closeMenu">Contact</a></li>
         <button 
-        @click="toggleDarkMode"
-        class="ml-4 px-4 py-2 bg-gray-800 text-white font-semibold transition duration-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:bg-gray-700 dark:hover:bg-gray-600"
-      >
-        {{ isDarkMode ? '🌞 Light' : '🌙 Dark' }}
-      </button>
+          @click="toggleDarkMode"
+          class="px-4 py-2 font-semibold transition duration-300"
+          :class="isDarkMode ? 'bg-gray-300 text-black hover:bg-gray-400' : 'bg-gray-800 text-white hover:bg-gray-700'"
+        >
+          {{ isDarkMode ? 'Dark' : 'Light' }}
+        </button>
       </ul>
     </div>
-  </nav>
+  </transition>
  <!-- Page Indicator -->
  <div class="pageIndicator fixed top-1/2 left-4 transform -translate-y-1/2 hidden md:flex flex-col items-start z-50">
       <div
@@ -71,7 +92,7 @@
           'transition-all duration-300',
           activeSection === section.id
             ? 'bg-sky-800'
-            : isDarkMode ? 'bg-gray-600 opacity-50' : 'bg-gray-300 opacity-50'
+            : isDarkMode ? 'bg-gray-300 opacity-50' : 'bg-gray-600 opacity-50'
         ]"
         :style="{ width: section.width, height: '4px' }"
       ></div>
@@ -139,6 +160,17 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
+const closeMenu = () => {
+  isMenuOpen.value = false;
+};
+
+const closeMenuOutside = (event) => {
+  const menu = document.querySelector(".menu-mobile");
+  if (menu && !menu.contains(event.target) && isMenuOpen.value) {
+    isMenuOpen.value = false;
+  }
+};
+
 const getLinkClass = (sectionId) => {
   return activeSection.value === sectionId
     ? 'underline decoration-4 decoration-cyan-800 decoration-offset-4'
@@ -192,6 +224,14 @@ onUnmounted(() => {
   window.removeEventListener('scroll', detectActiveSection);
 });
 
+onMounted(() => {
+  window.addEventListener("click", closeMenuOutside);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("click", closeMenuOutside);
+});
+
 </script>
 
 <style scoped>
@@ -202,4 +242,12 @@ onUnmounted(() => {
   margin-bottom: 0; /* Supprime l'espace après le dernier élément */
 }
 
+/* Transition du menu mobile */
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+.slide-enter-from, .slide-leave-to {
+  transform: translateY(-100%);
+  opacity: 0;
+}
 </style>
