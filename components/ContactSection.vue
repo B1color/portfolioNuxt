@@ -57,13 +57,27 @@
       </div>
   </section>
 </template>
-
 <script setup>
-import { ref, onMounted, inject } from "vue";
+import { ref, onMounted, onUnmounted, inject } from "vue";
 import axios from "axios";
+
 const isDarkMode = inject('isDarkMode');
-const profile = ref({});
 const isVisible = ref(false);
+const profile = ref({ email: "Loading..." });
+
+useAsyncData('contact', async () => {
+  try {
+    const response = await axios.get("https://strapi.mlebouard.fr/api/contacts");
+    if (response.data.data.length > 0) {
+      profile.value.email = response.data.data[0].Titre || "Email not available";
+    } else {
+      profile.value.email = "Email not found";
+    }
+  } catch (error) {
+    console.error("Erreur lors de la récupération des données de contact:", error);
+    profile.value.email = "Erreur de chargement";
+  }
+});
 
 const copyEmail = () => {
   if (profile.value.email) {
@@ -82,20 +96,7 @@ const handleScroll = () => {
   }
 };
 
-async function fetchContact() {
-  try {
-    const response = await axios.get("https://strapi.mlebouard.fr/api/contacts");
-    const data = response.data.data[0];
-    profile.value = {
-      email: data.Titre,
-    };
-  } catch (error) {
-    console.error("Erreur lors de la récupération des données de profil:", error);
-  }
-}
-
 onMounted(() => {
-  fetchContact();
   window.addEventListener('scroll', handleScroll);
   handleScroll();
 });
@@ -103,5 +104,4 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
-
 </script>

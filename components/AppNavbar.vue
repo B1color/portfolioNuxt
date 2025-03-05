@@ -8,7 +8,11 @@
     <div class="flex justify-between items-center">
       <!-- Logo -->
       <nuxt-link to="/">
-        <img src="/logo.png" alt="Logo" class="h-25" />
+        <img 
+        :src="logoSrc" 
+        alt="Logo" 
+          class="h-25 transition-all duration-500 opacity-100"
+          />
       </nuxt-link>
 
        <!-- Bouton Menu Mobile -->
@@ -214,6 +218,12 @@ const handleClick = (item) => {
   console.log(`Navigating to: ${item.label}`);
 };
 
+onMounted(() => {
+  const storedDarkMode = localStorage.getItem('darkMode');
+  isDarkMode.value = storedDarkMode === 'enabled'; // ✅ Applique la bonne valeur dès le début
+});
+
+const logoSrc = computed(() => isDarkMode.value ? '/logo-dark.png' : '/logo-light.png');
 
 onMounted(() => {
   window.addEventListener('scroll', detectActiveSection);

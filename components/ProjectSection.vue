@@ -185,45 +185,16 @@
 <script setup>
 import { ref, onMounted, onUnmounted, inject } from 'vue';
 import axios from 'axios';
-const isDarkMode = inject('isDarkMode');
 
-const projects = ref([]);
+const isDarkMode = inject('isDarkMode');
 const isPopupVisible = ref(false);
 const selectedProject = ref(null);
 const isVisible = ref(false);
 
-const handleScroll = () => {
-  const section = document.getElementById('projects');
-  if (section) {
-    const rect = section.getBoundingClientRect();
-    isVisible.value = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
-  }
-};
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-  handleScroll();
-});
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
-
-
-const openPopup = (project) => {
-  selectedProject.value = project;
-  isPopupVisible.value = true;
-};
-
-// Fermer la popup
-const closePopup = () => {
-  isPopupVisible.value = false;
-};
-
-async function fetchProjects() {
+const { data: projects } = useAsyncData('projects', async () => {
   try {
     const response = await axios.get('https://strapi.mlebouard.fr/api/projets?populate=*');
-    projects.value = response.data.data.map((project) => ({
+    return response.data.data.map((project) => ({
       id: project.id,
       titre: project.Titre,
       description: project.description,
@@ -246,12 +217,36 @@ async function fetchProjects() {
     }));
   } catch (error) {
     console.error('Erreur lors de la récupération des projets :', error);
+    return [];
+  }
+});
+
+const handleScroll = () => {
+  const section = document.getElementById('projects');
+  if (section) {
+    const rect = section.getBoundingClientRect();
+    isVisible.value = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
   }
 };
 
 onMounted(() => {
-  fetchProjects();
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
 });
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
+
+// Gestion de la popup
+const openPopup = (project) => {
+  selectedProject.value = project;
+  isPopupVisible.value = true;
+};
+
+const closePopup = () => {
+  isPopupVisible.value = false;
+};
 </script>
 
 <style scoped>

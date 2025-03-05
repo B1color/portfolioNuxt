@@ -70,29 +70,27 @@
 <script setup>
 import { ref, onMounted, onUnmounted, inject } from 'vue';
 import axios from 'axios';
-const isDarkMode = inject('isDarkMode'); // Récupérer le mode sombre globalement
 
-// Définir la variable profile pour stocker les données
-const profile = ref(null);
+const isDarkMode = inject('isDarkMode');
 const sections = ['profile', 'skills', 'projects', 'contact'];
 const activeSection = ref('profile');
 const isVisible = ref(false);
 const hasScrolled = ref(false);
-const profileImage = ref('/pnj-portfolio.png')
+const profileImage = ref('/pnj-portfolio.png');
 
-// Fonction pour récupérer les données de l'API
-async function fetchProfile() {
+const { data: profile } = useAsyncData('profile', async () => {
   try {
     const response = await axios.get('https://strapi.mlebouard.fr/api/profils/');
-    const data = response.data.data[0]; // Récupérer le premier profil
-    profile.value = {
+    const data = response.data.data[0];
+    return {
       Titre: data.Titre || 'Manon Le Bouard',
       description: data.description || 'Développeuse web et mobile',
     };
   } catch (error) {
     console.error('Erreur lors de la récupération des données de profil:', error);
+    return null;
   }
-}
+});
 
 const detectActiveSection = () => {
   let closestSection = null;
@@ -115,6 +113,7 @@ const detectActiveSection = () => {
     activeSection.value = closestSection;
   }
 };
+
 const handleScroll = () => {
   const scrollY = window.scrollY;
   hasScrolled.value = scrollY > 20;
@@ -127,13 +126,11 @@ const handleScroll = () => {
 };
 
 onMounted(() => {
-  fetchProfile(); // Charger les données de profil
-  window.addEventListener("scroll", handleScroll); // Activer le gestionnaire de défilement
-  detectActiveSection(); // Détecter la section active
+  window.addEventListener("scroll", handleScroll);
+  detectActiveSection();
 });
 
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
 });
-
 </script>
