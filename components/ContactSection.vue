@@ -1,7 +1,7 @@
 <template>
   <section 
   :class="[
-      'profile section pt-30 h-screen flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 transition-colors duration-300',
+      'contact section pt-30 h-screen flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 transition-colors duration-300',
       isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'
     ]"
     >
@@ -65,19 +65,17 @@ const isDarkMode = inject('isDarkMode');
 const isVisible = ref(false);
 const profile = ref({ email: "Loading..." });
 
-useAsyncData('contact', async () => {
+async function fetchContact() {
   try {
     const response = await axios.get("https://strapi.mlebouard.fr/api/contacts");
-    if (response.data.data.length > 0) {
-      profile.value.email = response.data.data[0].Titre || "Email not available";
-    } else {
-      profile.value.email = "Email not found";
-    }
+    const data = response.data.data[0];
+    profile.value = {
+      email: data.Titre,
+    };
   } catch (error) {
-    console.error("Erreur lors de la récupération des données de contact:", error);
-    profile.value.email = "Erreur de chargement";
+    console.error("Erreur lors de la récupération des données de profil:", error);
   }
-});
+}
 
 const copyEmail = () => {
   if (profile.value.email) {
@@ -97,6 +95,7 @@ const handleScroll = () => {
 };
 
 onMounted(() => {
+  fetchContact();
   window.addEventListener('scroll', handleScroll);
   handleScroll();
 });

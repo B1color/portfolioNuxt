@@ -2,7 +2,7 @@
   <section
     id="skills"
     :class="[
-      'profile section pt-30 h-screen flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 transition-colors duration-300',
+      'skills section pb-20 pt-30 flex items-center w-full max-w-screen-lg mx-auto px-4 md:px-8 transition-colors duration-300',
       isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'
     ]">
     <div class="w-full">
@@ -124,7 +124,11 @@ const fetchSkills = async () => {
       icon: skill.icone?.url ? `https://strapi.mlebouard.fr${skill.icone.url}` : null,
     }));
   } catch (error) {
-    console.error("Erreur lors de la récupération des skills :", error);
+    return {
+      title: "Error",
+      description: "An error occurred while fetching skills",
+      icon: null,
+    };
   }
 };
 

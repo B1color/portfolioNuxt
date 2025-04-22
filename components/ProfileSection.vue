@@ -26,8 +26,7 @@
       </div>
 
       <div class="relative md:w-1/2 flex justify-center items-center">
-        <img :src="profileImage" alt="Manon Le Bouard" class="w-64 h-64 object-cover shadow-lg transition duration-300"
-          :class="isDarkMode ? 'shadow-gray-700' : 'shadow-gray-300'" />
+        <img :src="profileImage" alt="Manon Le Bouard" class="w-64 h-64 object-cover transition duration-300">
       </div>
 
       <!-- Indicateur de scroll -->
@@ -87,8 +86,10 @@ const { data: profile } = useAsyncData('profile', async () => {
       description: data.description || 'Développeuse web et mobile',
     };
   } catch (error) {
-    console.error('Erreur lors de la récupération des données de profil:', error);
-    return null;
+    return {
+      Titre: 'Manon Le Bouard',
+      description: 'Développeuse web et mobile',
+    };
   }
 });
 

@@ -1,7 +1,7 @@
 <template>
 <nav
     :class="[
-      'fixed top-0 left-0 w-full p-4 transition-colors duration-300',
+      'fixed top-0 left-0 w-full p-4 transition-colors duration-300 z-50',
       isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'
     ]"
   >
@@ -28,11 +28,11 @@
     </button>
 
       <!-- Menu Desktop -->
-    <ul class="hidden md:flex space-x-4 ml-auto">
-      <li><a href="#profile" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']">Profile</a></li>
-        <li><a href="#skills" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']">Skills</a></li>
-        <li><a href="#projects" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']">Projects</a></li>
-        <li><a href="#contact" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']">Contact</a></li>
+    <ul class="hidden md:flex space-x-6 ml-auto">
+      <li><a href="#profile" :class="['py-2 px-4 transition duration-300',activeSection === 'profile'? 'underline decoration-4 decoration-cyan-800 decoration-offset-4': isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']">Profile</a></li>
+        <li><a href="#skills" :class="['py-2 px-4 transition duration-300',activeSection === 'skills'? 'underline decoration-4 decoration-cyan-800 decoration-offset-4': isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']">Skills</a></li>
+        <li><a href="#projects" :class="['py-2 px-4 transition duration-300',activeSection === 'projects'? 'underline decoration-4 decoration-cyan-800 decoration-offset-4': isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']">Projects</a></li>
+        <li><a href="#contact" :class="['py-2 px-4 transition duration-300',activeSection === 'contact'? 'underline decoration-4 decoration-cyan-800 decoration-offset-4': isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']">Contact</a></li>
 
       <!-- Bouton Dark Mode -->
       <button 
@@ -68,14 +68,14 @@
       </button>
 
       <!-- Liens du menu -->
-      <ul class="flex flex-col items-center space-y-4">
+      <ul class="flex flex-col items-center space-y-6">
         <li><a href="#profile" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']" @click="closeMenu">Profile</a></li>
         <li><a href="#skills" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']" @click="closeMenu">Skills</a></li>
         <li><a href="#projects" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']" @click="closeMenu">Projects</a></li>
         <li><a href="#contact" :class="[isDarkMode ? 'text-white hover:text-gray-400' : 'text-black hover:text-gray-600']" @click="closeMenu">Contact</a></li>
         <button 
           @click="toggleDarkMode"
-          class="px-4 py-2 font-semibold transition duration-300"
+          class="font-semibold transition duration-300"
           :class="isDarkMode ? 'bg-gray-300 text-black hover:bg-gray-400' : 'bg-gray-800 text-white hover:bg-gray-700'"
         >
           {{ isDarkMode ? 'Dark' : 'Light' }}
@@ -226,22 +226,15 @@ onMounted(() => {
 const logoSrc = computed(() => isDarkMode.value ? '/logo-dark.png' : '/logo-light.png');
 
 onMounted(() => {
+  window.addEventListener("click", closeMenuOutside);
   window.addEventListener('scroll', detectActiveSection);
   detectActiveSection();
 });
 
 onUnmounted(() => {
+  window.removeEventListener("click", closeMenuOutside);
   window.removeEventListener('scroll', detectActiveSection);
 });
-
-onMounted(() => {
-  window.addEventListener("click", closeMenuOutside);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("click", closeMenuOutside);
-});
-
 </script>
 
 <style scoped>
