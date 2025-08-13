@@ -32,6 +32,12 @@ export default defineNuxtConfig({
       ],
     },
   },
+  runtimeConfig: {
+      STRAPI_TOKEN: process.env.STRAPI_TOKEN || '', // server-only
+      public: {
+        STRAPI_URL: process.env.NUXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'
+      }
+    },
 
   modules: [],
 })
